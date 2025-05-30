@@ -1,3 +1,3 @@
-# snake-mc-queen
+# Making Python Fast
 
-Ka-Chow sssss
+Ka-Chow
