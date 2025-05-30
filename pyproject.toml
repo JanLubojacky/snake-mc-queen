@@ -1,0 +1,10 @@
+[project]
+name = "snake-mc-queen"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ["numba>=0.61.2"]
+
+[tool.uv.workspace]
+members = ["hamming_py"]
