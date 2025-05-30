@@ -8,16 +8,7 @@ from libc.math cimport sqrt
 def hamming_dist(str a, str b):
     """
     Calculate the Hamming distance between two strings using Cython.
-
-    Args:
-        a: First string
-        b: Second string
-
-    Returns:
-        int: The Hamming distance (number of differing characters)
-
-    Raises:
-        ValueError: If strings have different lengths
+    Works correctly with UTF-8/Unicode strings.
     """
     cdef int len_a = len(a)
     cdef int len_b = len(b)
@@ -29,13 +20,10 @@ def hamming_dist(str a, str b):
     
     cdef int count = 0
     cdef int i
-    cdef bytes a_bytes = a.encode('utf-8')
-    cdef bytes b_bytes = b.encode('utf-8')
-    cdef char* a_ptr = a_bytes
-    cdef char* b_ptr = b_bytes
     
+    # Compare characters directly, not bytes
     for i in range(len_a):
-        if a_ptr[i] != b_ptr[i]:
+        if a[i] != b[i]:
             count += 1
     
     return count

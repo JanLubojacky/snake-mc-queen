@@ -1810,6 +1810,14 @@ static int __Pyx__ArgTypeTest(PyObject *obj, PyTypeObject *type, const char *nam
 /* RaiseException.proto */
 static void __Pyx_Raise(PyObject *type, PyObject *value, PyObject *tb, PyObject *cause);
 
+/* GetItemIntUnicode.proto */
+#define __Pyx_GetItemInt_Unicode(o, i, type, is_signed, to_py_func, is_list, wraparound, boundscheck)\
+    (__Pyx_fits_Py_ssize_t(i, type, is_signed) ?\
+    __Pyx_GetItemInt_Unicode_Fast(o, (Py_ssize_t)i, wraparound, boundscheck) :\
+    (PyErr_SetString(PyExc_IndexError, "string index out of range"), (Py_UCS4)-1))
+static CYTHON_INLINE Py_UCS4 __Pyx_GetItemInt_Unicode_Fast(PyObject* ustring, Py_ssize_t i,
+                                                           int wraparound, int boundscheck);
+
 /* FixUpExtensionType.proto */
 static CYTHON_INLINE int __Pyx_fix_up_extension_type_from_spec(PyType_Spec *spec, PyTypeObject *type);
 
@@ -2154,15 +2162,11 @@ static const char __pyx_k_func[] = "__func__";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_name[] = "__name__";
 static const char __pyx_k_test[] = "__test__";
-static const char __pyx_k_a_ptr[] = "a_ptr";
-static const char __pyx_k_b_ptr[] = "b_ptr";
 static const char __pyx_k_count[] = "count";
 static const char __pyx_k_len_a[] = "len_a";
 static const char __pyx_k_len_b[] = "len_b";
 static const char __pyx_k_range[] = "range";
 static const char __pyx_k_module[] = "__module__";
-static const char __pyx_k_a_bytes[] = "a_bytes";
-static const char __pyx_k_b_bytes[] = "b_bytes";
 static const char __pyx_k_add_note[] = "add_note";
 static const char __pyx_k_nsamples[] = "nsamples";
 static const char __pyx_k_qualname[] = "__qualname__";
@@ -2174,7 +2178,7 @@ static const char __pyx_k_cython_examples[] = "cython_examples";
 static const char __pyx_k_asyncio_coroutines[] = "asyncio.coroutines";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_cython_examples_pyx[] = "cython_examples.pyx";
-static const char __pyx_k_S_S_vS_j_Q_q_q_U_1_5_CuAQ_Q_1[] = "\200\001\360 \000\005\026\220S\230\001\230\021\330\004\025\220S\230\001\230\021\340\004\007\200v\210S\220\001\330\010\016\210j\230\001\330\014\r\360\006\000\005\026\220Q\340\004\031\230\021\230'\240\021\240!\330\004\031\230\021\230'\240\021\240!\330\004\027\220q\330\004\027\220q\340\004\010\210\005\210U\220!\2201\330\010\013\2105\220\001\220\023\220C\220u\230A\230Q\330\014\025\220Q\340\004\013\2101";
+static const char __pyx_k_S_S_vS_j_Q_U_1_1AS_1AQ_Q_1[] = "\200\001\360\016\000\005\026\220S\230\001\230\021\330\004\025\220S\230\001\230\021\340\004\007\200v\210S\220\001\330\010\016\210j\230\001\330\014\r\360\006\000\005\026\220Q\360\010\000\005\t\210\005\210U\220!\2201\330\010\013\2101\210A\210S\220\003\2201\220A\220Q\330\014\025\220Q\340\004\013\2101";
 static const char __pyx_k_1_U_1_HD_2XQ_HD_2XQ_Bb_Bb_2Q_1[] = "\200\001\360\030\000\005\024\2201\360\010\000\005\t\210\005\210U\220!\2201\330\010\014\210H\220D\230\003\2302\230X\240Q\330\010\014\210H\220D\230\003\2302\230X\240Q\330\010\014\210B\210b\220\002\220\"\220B\220b\230\003\2302\230Q\330\014\023\2201\340\004\013\2104\210r\220\030\230\024\230R\230x\240q";
 static const char __pyx_k_Note_that_Cython_is_deliberately[] = "Note that Cython is deliberately stricter than PEP-484 and rejects subclasses of builtin types. If you need to pass subclasses then set the 'annotation_typing' directive to False.";
 static const char __pyx_k_Strings_must_have_equal_length_f[] = "Strings must have equal length for Hamming distance calculation";
@@ -2221,7 +2225,7 @@ typedef struct {
   #endif
   __Pyx_CachedCFunction __pyx_umethod_PyDict_Type_pop;
   PyObject *__pyx_codeobj_tab[2];
-  PyObject *__pyx_string_tab[34];
+  PyObject *__pyx_string_tab[30];
 /* #### Code section: module_state_contents ### */
 /* CachedMethodType.module_state_decls */
 #if CYTHON_COMPILING_IN_LIMITED_API
@@ -2261,35 +2265,31 @@ static __pyx_mstatetype * const __pyx_mstate_global = &__pyx_mstate_global_stati
 #define __pyx_kp_u_Strings_must_have_equal_length_f __pyx_string_tab[2]
 #define __pyx_n_u_ValueError __pyx_string_tab[3]
 #define __pyx_n_u_a __pyx_string_tab[4]
-#define __pyx_n_u_a_bytes __pyx_string_tab[5]
-#define __pyx_n_u_a_ptr __pyx_string_tab[6]
-#define __pyx_n_u_acc __pyx_string_tab[7]
-#define __pyx_kp_u_add_note __pyx_string_tab[8]
-#define __pyx_n_u_asyncio_coroutines __pyx_string_tab[9]
-#define __pyx_n_u_b __pyx_string_tab[10]
-#define __pyx_n_u_b_bytes __pyx_string_tab[11]
-#define __pyx_n_u_b_ptr __pyx_string_tab[12]
-#define __pyx_n_u_cline_in_traceback __pyx_string_tab[13]
-#define __pyx_n_u_count __pyx_string_tab[14]
-#define __pyx_n_u_cython_examples __pyx_string_tab[15]
-#define __pyx_kp_u_cython_examples_pyx __pyx_string_tab[16]
-#define __pyx_n_u_func __pyx_string_tab[17]
-#define __pyx_n_u_hamming_dist __pyx_string_tab[18]
-#define __pyx_n_u_i __pyx_string_tab[19]
-#define __pyx_n_u_is_coroutine __pyx_string_tab[20]
-#define __pyx_n_u_len_a __pyx_string_tab[21]
-#define __pyx_n_u_len_b __pyx_string_tab[22]
-#define __pyx_n_u_main __pyx_string_tab[23]
-#define __pyx_n_u_module __pyx_string_tab[24]
-#define __pyx_n_u_monte_carlo_pi __pyx_string_tab[25]
-#define __pyx_n_u_name __pyx_string_tab[26]
-#define __pyx_n_u_nsamples __pyx_string_tab[27]
-#define __pyx_n_u_pop __pyx_string_tab[28]
-#define __pyx_n_u_qualname __pyx_string_tab[29]
-#define __pyx_n_u_range __pyx_string_tab[30]
-#define __pyx_n_u_test __pyx_string_tab[31]
-#define __pyx_n_u_x __pyx_string_tab[32]
-#define __pyx_n_u_y __pyx_string_tab[33]
+#define __pyx_n_u_acc __pyx_string_tab[5]
+#define __pyx_kp_u_add_note __pyx_string_tab[6]
+#define __pyx_n_u_asyncio_coroutines __pyx_string_tab[7]
+#define __pyx_n_u_b __pyx_string_tab[8]
+#define __pyx_n_u_cline_in_traceback __pyx_string_tab[9]
+#define __pyx_n_u_count __pyx_string_tab[10]
+#define __pyx_n_u_cython_examples __pyx_string_tab[11]
+#define __pyx_kp_u_cython_examples_pyx __pyx_string_tab[12]
+#define __pyx_n_u_func __pyx_string_tab[13]
+#define __pyx_n_u_hamming_dist __pyx_string_tab[14]
+#define __pyx_n_u_i __pyx_string_tab[15]
+#define __pyx_n_u_is_coroutine __pyx_string_tab[16]
+#define __pyx_n_u_len_a __pyx_string_tab[17]
+#define __pyx_n_u_len_b __pyx_string_tab[18]
+#define __pyx_n_u_main __pyx_string_tab[19]
+#define __pyx_n_u_module __pyx_string_tab[20]
+#define __pyx_n_u_monte_carlo_pi __pyx_string_tab[21]
+#define __pyx_n_u_name __pyx_string_tab[22]
+#define __pyx_n_u_nsamples __pyx_string_tab[23]
+#define __pyx_n_u_pop __pyx_string_tab[24]
+#define __pyx_n_u_qualname __pyx_string_tab[25]
+#define __pyx_n_u_range __pyx_string_tab[26]
+#define __pyx_n_u_test __pyx_string_tab[27]
+#define __pyx_n_u_x __pyx_string_tab[28]
+#define __pyx_n_u_y __pyx_string_tab[29]
 /* #### Code section: module_state_clear ### */
 #if CYTHON_USE_MODULE_STATE
 static CYTHON_SMALL_CODE int __pyx_m_clear(PyObject *m) {
@@ -2311,7 +2311,7 @@ static CYTHON_SMALL_CODE int __pyx_m_clear(PyObject *m) {
   __Pyx_State_RemoveModule(NULL);
   #endif
   for (int i=0; i<2; ++i) { Py_CLEAR(clear_module_state->__pyx_codeobj_tab[i]); }
-  for (int i=0; i<34; ++i) { Py_CLEAR(clear_module_state->__pyx_string_tab[i]); }
+  for (int i=0; i<30; ++i) { Py_CLEAR(clear_module_state->__pyx_string_tab[i]); }
   return 0;
 }
 #endif
@@ -2333,7 +2333,7 @@ static CYTHON_SMALL_CODE int __pyx_m_traverse(PyObject *m, visitproc visit, void
   Py_VISIT(traverse_module_state->__pyx_FusedFunctionType);
   #endif
   for (int i=0; i<2; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_codeobj_tab[i]); }
-  for (int i=0; i<34; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_string_tab[i]); }
+  for (int i=0; i<30; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_string_tab[i]); }
   return 0;
 }
 #endif
@@ -2355,7 +2355,7 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_15cython_examples_hamming_dist, "\n    Calculate the Hamming distance between two strings using Cython.\n\n    Args:\n        a: First string\n        b: Second string\n\n    Returns:\n        int: The Hamming distance (number of differing characters)\n\n    Raises:\n        ValueError: If strings have different lengths\n    ");
+PyDoc_STRVAR(__pyx_doc_15cython_examples_hamming_dist, "\n    Calculate the Hamming distance between two strings using Cython.\n    Works correctly with UTF-8/Unicode strings.\n    ");
 static PyMethodDef __pyx_mdef_15cython_examples_1hamming_dist = {"hamming_dist", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_15cython_examples_1hamming_dist, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_15cython_examples_hamming_dist};
 static PyObject *__pyx_pw_15cython_examples_1hamming_dist(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
@@ -2457,10 +2457,6 @@ static PyObject *__pyx_pf_15cython_examples_hamming_dist(CYTHON_UNUSED PyObject 
   int __pyx_v_len_b;
   int __pyx_v_count;
   int __pyx_v_i;
-  PyObject *__pyx_v_a_bytes = 0;
-  PyObject *__pyx_v_b_bytes = 0;
-  char *__pyx_v_a_ptr;
-  char *__pyx_v_b_ptr;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   Py_ssize_t __pyx_t_1;
@@ -2469,17 +2465,18 @@ static PyObject *__pyx_pf_15cython_examples_hamming_dist(CYTHON_UNUSED PyObject 
   PyObject *__pyx_t_4 = NULL;
   PyObject *__pyx_t_5 = NULL;
   size_t __pyx_t_6;
-  char *__pyx_t_7;
+  int __pyx_t_7;
   int __pyx_t_8;
   int __pyx_t_9;
-  int __pyx_t_10;
+  Py_UCS4 __pyx_t_10;
+  Py_UCS4 __pyx_t_11;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("hamming_dist", 0);
 
-  /* "cython_examples.pyx":22
- *         ValueError: If strings have different lengths
+  /* "cython_examples.pyx":13
+ *     Works correctly with UTF-8/Unicode strings.
  *     """
  *     cdef int len_a = len(a)             # <<<<<<<<<<<<<<
  *     cdef int len_b = len(b)
@@ -2487,12 +2484,12 @@ static PyObject *__pyx_pf_15cython_examples_hamming_dist(CYTHON_UNUSED PyObject 
 */
   if (unlikely(__pyx_v_a == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-    __PYX_ERR(0, 22, __pyx_L1_error)
+    __PYX_ERR(0, 13, __pyx_L1_error)
   }
-  __pyx_t_1 = __Pyx_PyUnicode_GET_LENGTH(__pyx_v_a); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyUnicode_GET_LENGTH(__pyx_v_a); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 13, __pyx_L1_error)
   __pyx_v_len_a = __pyx_t_1;
 
-  /* "cython_examples.pyx":23
+  /* "cython_examples.pyx":14
  *     """
  *     cdef int len_a = len(a)
  *     cdef int len_b = len(b)             # <<<<<<<<<<<<<<
@@ -2501,12 +2498,12 @@ static PyObject *__pyx_pf_15cython_examples_hamming_dist(CYTHON_UNUSED PyObject 
 */
   if (unlikely(__pyx_v_b == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-    __PYX_ERR(0, 23, __pyx_L1_error)
+    __PYX_ERR(0, 14, __pyx_L1_error)
   }
-  __pyx_t_1 = __Pyx_PyUnicode_GET_LENGTH(__pyx_v_b); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyUnicode_GET_LENGTH(__pyx_v_b); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 14, __pyx_L1_error)
   __pyx_v_len_b = __pyx_t_1;
 
-  /* "cython_examples.pyx":25
+  /* "cython_examples.pyx":16
  *     cdef int len_b = len(b)
  * 
  *     if len_a != len_b:             # <<<<<<<<<<<<<<
@@ -2516,7 +2513,7 @@ static PyObject *__pyx_pf_15cython_examples_hamming_dist(CYTHON_UNUSED PyObject 
   __pyx_t_2 = (__pyx_v_len_a != __pyx_v_len_b);
   if (unlikely(__pyx_t_2)) {
 
-    /* "cython_examples.pyx":26
+    /* "cython_examples.pyx":17
  * 
  *     if len_a != len_b:
  *         raise ValueError(             # <<<<<<<<<<<<<<
@@ -2532,14 +2529,14 @@ static PyObject *__pyx_pf_15cython_examples_hamming_dist(CYTHON_UNUSED PyObject 
       __pyx_t_3 = __Pyx_PyObject_FastCall(__pyx_t_5, __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (__pyx_t_6*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 26, __pyx_L1_error)
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 17, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
     }
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __PYX_ERR(0, 26, __pyx_L1_error)
+    __PYX_ERR(0, 17, __pyx_L1_error)
 
-    /* "cython_examples.pyx":25
+    /* "cython_examples.pyx":16
  *     cdef int len_b = len(b)
  * 
  *     if len_a != len_b:             # <<<<<<<<<<<<<<
@@ -2548,109 +2545,59 @@ static PyObject *__pyx_pf_15cython_examples_hamming_dist(CYTHON_UNUSED PyObject 
 */
   }
 
-  /* "cython_examples.pyx":30
+  /* "cython_examples.pyx":21
  *         )
  * 
  *     cdef int count = 0             # <<<<<<<<<<<<<<
  *     cdef int i
- *     cdef bytes a_bytes = a.encode('utf-8')
+ * 
 */
   __pyx_v_count = 0;
 
-  /* "cython_examples.pyx":32
- *     cdef int count = 0
- *     cdef int i
- *     cdef bytes a_bytes = a.encode('utf-8')             # <<<<<<<<<<<<<<
- *     cdef bytes b_bytes = b.encode('utf-8')
- *     cdef char* a_ptr = a_bytes
-*/
-  if (unlikely(__pyx_v_a == Py_None)) {
-    PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "encode");
-    __PYX_ERR(0, 32, __pyx_L1_error)
-  }
-  __pyx_t_3 = PyUnicode_AsUTF8String(__pyx_v_a); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 32, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_v_a_bytes = ((PyObject*)__pyx_t_3);
-  __pyx_t_3 = 0;
-
-  /* "cython_examples.pyx":33
- *     cdef int i
- *     cdef bytes a_bytes = a.encode('utf-8')
- *     cdef bytes b_bytes = b.encode('utf-8')             # <<<<<<<<<<<<<<
- *     cdef char* a_ptr = a_bytes
- *     cdef char* b_ptr = b_bytes
-*/
-  if (unlikely(__pyx_v_b == Py_None)) {
-    PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "encode");
-    __PYX_ERR(0, 33, __pyx_L1_error)
-  }
-  __pyx_t_3 = PyUnicode_AsUTF8String(__pyx_v_b); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 33, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_v_b_bytes = ((PyObject*)__pyx_t_3);
-  __pyx_t_3 = 0;
-
-  /* "cython_examples.pyx":34
- *     cdef bytes a_bytes = a.encode('utf-8')
- *     cdef bytes b_bytes = b.encode('utf-8')
- *     cdef char* a_ptr = a_bytes             # <<<<<<<<<<<<<<
- *     cdef char* b_ptr = b_bytes
+  /* "cython_examples.pyx":25
  * 
-*/
-  __pyx_t_7 = __Pyx_PyBytes_AsWritableString(__pyx_v_a_bytes); if (unlikely((!__pyx_t_7) && PyErr_Occurred())) __PYX_ERR(0, 34, __pyx_L1_error)
-  __pyx_v_a_ptr = __pyx_t_7;
-
-  /* "cython_examples.pyx":35
- *     cdef bytes b_bytes = b.encode('utf-8')
- *     cdef char* a_ptr = a_bytes
- *     cdef char* b_ptr = b_bytes             # <<<<<<<<<<<<<<
- * 
- *     for i in range(len_a):
-*/
-  __pyx_t_7 = __Pyx_PyBytes_AsWritableString(__pyx_v_b_bytes); if (unlikely((!__pyx_t_7) && PyErr_Occurred())) __PYX_ERR(0, 35, __pyx_L1_error)
-  __pyx_v_b_ptr = __pyx_t_7;
-
-  /* "cython_examples.pyx":37
- *     cdef char* b_ptr = b_bytes
- * 
+ *     # Compare characters directly, not bytes
  *     for i in range(len_a):             # <<<<<<<<<<<<<<
- *         if a_ptr[i] != b_ptr[i]:
+ *         if a[i] != b[i]:
  *             count += 1
 */
-  __pyx_t_8 = __pyx_v_len_a;
-  __pyx_t_9 = __pyx_t_8;
-  for (__pyx_t_10 = 0; __pyx_t_10 < __pyx_t_9; __pyx_t_10+=1) {
-    __pyx_v_i = __pyx_t_10;
+  __pyx_t_7 = __pyx_v_len_a;
+  __pyx_t_8 = __pyx_t_7;
+  for (__pyx_t_9 = 0; __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
+    __pyx_v_i = __pyx_t_9;
 
-    /* "cython_examples.pyx":38
- * 
+    /* "cython_examples.pyx":26
+ *     # Compare characters directly, not bytes
  *     for i in range(len_a):
- *         if a_ptr[i] != b_ptr[i]:             # <<<<<<<<<<<<<<
+ *         if a[i] != b[i]:             # <<<<<<<<<<<<<<
  *             count += 1
  * 
 */
-    __pyx_t_2 = ((__pyx_v_a_ptr[__pyx_v_i]) != (__pyx_v_b_ptr[__pyx_v_i]));
+    __pyx_t_10 = __Pyx_GetItemInt_Unicode(__pyx_v_a, __pyx_v_i, int, 1, __Pyx_PyLong_From_int, 0, 0, 0); if (unlikely(__pyx_t_10 == (Py_UCS4)-1)) __PYX_ERR(0, 26, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_GetItemInt_Unicode(__pyx_v_b, __pyx_v_i, int, 1, __Pyx_PyLong_From_int, 0, 0, 0); if (unlikely(__pyx_t_11 == (Py_UCS4)-1)) __PYX_ERR(0, 26, __pyx_L1_error)
+    __pyx_t_2 = (__pyx_t_10 != __pyx_t_11);
     if (__pyx_t_2) {
 
-      /* "cython_examples.pyx":39
+      /* "cython_examples.pyx":27
  *     for i in range(len_a):
- *         if a_ptr[i] != b_ptr[i]:
+ *         if a[i] != b[i]:
  *             count += 1             # <<<<<<<<<<<<<<
  * 
  *     return count
 */
       __pyx_v_count = (__pyx_v_count + 1);
 
-      /* "cython_examples.pyx":38
- * 
+      /* "cython_examples.pyx":26
+ *     # Compare characters directly, not bytes
  *     for i in range(len_a):
- *         if a_ptr[i] != b_ptr[i]:             # <<<<<<<<<<<<<<
+ *         if a[i] != b[i]:             # <<<<<<<<<<<<<<
  *             count += 1
  * 
 */
     }
   }
 
-  /* "cython_examples.pyx":41
+  /* "cython_examples.pyx":29
  *             count += 1
  * 
  *     return count             # <<<<<<<<<<<<<<
@@ -2658,7 +2605,7 @@ static PyObject *__pyx_pf_15cython_examples_hamming_dist(CYTHON_UNUSED PyObject 
  * @cython.boundscheck(False)
 */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_3 = __Pyx_PyLong_From_int(__pyx_v_count); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyLong_From_int(__pyx_v_count); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 29, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_r = __pyx_t_3;
   __pyx_t_3 = 0;
@@ -2680,14 +2627,12 @@ static PyObject *__pyx_pf_15cython_examples_hamming_dist(CYTHON_UNUSED PyObject 
   __Pyx_AddTraceback("cython_examples.hamming_dist", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_a_bytes);
-  __Pyx_XDECREF(__pyx_v_b_bytes);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "cython_examples.pyx":43
+/* "cython_examples.pyx":31
  *     return count
  * 
  * @cython.boundscheck(False)             # <<<<<<<<<<<<<<
@@ -2735,32 +2680,32 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_nsamples,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 43, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 31, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 43, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 31, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "monte_carlo_pi", 0) < 0) __PYX_ERR(0, 43, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "monte_carlo_pi", 0) < 0) __PYX_ERR(0, 31, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("monte_carlo_pi", 1, 1, 1, i); __PYX_ERR(0, 43, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("monte_carlo_pi", 1, 1, 1, i); __PYX_ERR(0, 31, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 43, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 31, __pyx_L3_error)
     }
-    __pyx_v_nsamples = __Pyx_PyLong_As_int(values[0]); if (unlikely((__pyx_v_nsamples == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 45, __pyx_L3_error)
+    __pyx_v_nsamples = __Pyx_PyLong_As_int(values[0]); if (unlikely((__pyx_v_nsamples == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 33, __pyx_L3_error)
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("monte_carlo_pi", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 43, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("monte_carlo_pi", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 31, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -2799,7 +2744,7 @@ static PyObject *__pyx_pf_15cython_examples_2monte_carlo_pi(CYTHON_UNUSED PyObje
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("monte_carlo_pi", 0);
 
-  /* "cython_examples.pyx":55
+  /* "cython_examples.pyx":43
  *         float: The estimated value of pi
  *     """
  *     cdef int acc = 0             # <<<<<<<<<<<<<<
@@ -2808,7 +2753,7 @@ static PyObject *__pyx_pf_15cython_examples_2monte_carlo_pi(CYTHON_UNUSED PyObje
 */
   __pyx_v_acc = 0;
 
-  /* "cython_examples.pyx":59
+  /* "cython_examples.pyx":47
  *     cdef double x, y
  * 
  *     for i in range(nsamples):             # <<<<<<<<<<<<<<
@@ -2820,7 +2765,7 @@ static PyObject *__pyx_pf_15cython_examples_2monte_carlo_pi(CYTHON_UNUSED PyObje
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "cython_examples.pyx":60
+    /* "cython_examples.pyx":48
  * 
  *     for i in range(nsamples):
  *         x = <double>rand() / <double>RAND_MAX             # <<<<<<<<<<<<<<
@@ -2830,11 +2775,11 @@ static PyObject *__pyx_pf_15cython_examples_2monte_carlo_pi(CYTHON_UNUSED PyObje
     __pyx_t_4 = ((double)rand());
     if (unlikely(((double)RAND_MAX) == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-      __PYX_ERR(0, 60, __pyx_L1_error)
+      __PYX_ERR(0, 48, __pyx_L1_error)
     }
     __pyx_v_x = (__pyx_t_4 / ((double)RAND_MAX));
 
-    /* "cython_examples.pyx":61
+    /* "cython_examples.pyx":49
  *     for i in range(nsamples):
  *         x = <double>rand() / <double>RAND_MAX
  *         y = <double>rand() / <double>RAND_MAX             # <<<<<<<<<<<<<<
@@ -2844,11 +2789,11 @@ static PyObject *__pyx_pf_15cython_examples_2monte_carlo_pi(CYTHON_UNUSED PyObje
     __pyx_t_4 = ((double)rand());
     if (unlikely(((double)RAND_MAX) == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-      __PYX_ERR(0, 61, __pyx_L1_error)
+      __PYX_ERR(0, 49, __pyx_L1_error)
     }
     __pyx_v_y = (__pyx_t_4 / ((double)RAND_MAX));
 
-    /* "cython_examples.pyx":62
+    /* "cython_examples.pyx":50
  *         x = <double>rand() / <double>RAND_MAX
  *         y = <double>rand() / <double>RAND_MAX
  *         if (x * x + y * y) < 1.0:             # <<<<<<<<<<<<<<
@@ -2858,7 +2803,7 @@ static PyObject *__pyx_pf_15cython_examples_2monte_carlo_pi(CYTHON_UNUSED PyObje
     __pyx_t_5 = (((__pyx_v_x * __pyx_v_x) + (__pyx_v_y * __pyx_v_y)) < 1.0);
     if (__pyx_t_5) {
 
-      /* "cython_examples.pyx":63
+      /* "cython_examples.pyx":51
  *         y = <double>rand() / <double>RAND_MAX
  *         if (x * x + y * y) < 1.0:
  *             acc += 1             # <<<<<<<<<<<<<<
@@ -2867,7 +2812,7 @@ static PyObject *__pyx_pf_15cython_examples_2monte_carlo_pi(CYTHON_UNUSED PyObje
 */
       __pyx_v_acc = (__pyx_v_acc + 1);
 
-      /* "cython_examples.pyx":62
+      /* "cython_examples.pyx":50
  *         x = <double>rand() / <double>RAND_MAX
  *         y = <double>rand() / <double>RAND_MAX
  *         if (x * x + y * y) < 1.0:             # <<<<<<<<<<<<<<
@@ -2877,7 +2822,7 @@ static PyObject *__pyx_pf_15cython_examples_2monte_carlo_pi(CYTHON_UNUSED PyObje
     }
   }
 
-  /* "cython_examples.pyx":65
+  /* "cython_examples.pyx":53
  *             acc += 1
  * 
  *     return 4.0 * <double>acc / <double>nsamples             # <<<<<<<<<<<<<<
@@ -2886,15 +2831,15 @@ static PyObject *__pyx_pf_15cython_examples_2monte_carlo_pi(CYTHON_UNUSED PyObje
   __pyx_t_4 = (4.0 * ((double)__pyx_v_acc));
   if (unlikely(((double)__pyx_v_nsamples) == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 65, __pyx_L1_error)
+    __PYX_ERR(0, 53, __pyx_L1_error)
   }
-  __pyx_t_6 = PyFloat_FromDouble((__pyx_t_4 / ((double)__pyx_v_nsamples))); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 65, __pyx_L1_error)
+  __pyx_t_6 = PyFloat_FromDouble((__pyx_t_4 / ((double)__pyx_v_nsamples))); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_r = __pyx_t_6;
   __pyx_t_6 = 0;
   goto __pyx_L0;
 
-  /* "cython_examples.pyx":43
+  /* "cython_examples.pyx":31
  *     return count
  * 
  * @cython.boundscheck(False)             # <<<<<<<<<<<<<<
@@ -3286,16 +3231,16 @@ __Pyx_RefNannySetupContext("PyInit_cython_examples", 0);
   if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_hamming_dist, __pyx_t_2) < 0) __PYX_ERR(0, 6, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "cython_examples.pyx":43
+  /* "cython_examples.pyx":31
  *     return count
  * 
  * @cython.boundscheck(False)             # <<<<<<<<<<<<<<
  * @cython.wraparound(False)
  * def monte_carlo_pi(int nsamples):
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_15cython_examples_3monte_carlo_pi, 0, __pyx_mstate_global->__pyx_n_u_monte_carlo_pi, NULL, __pyx_mstate_global->__pyx_n_u_cython_examples, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[1])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_15cython_examples_3monte_carlo_pi, 0, __pyx_mstate_global->__pyx_n_u_monte_carlo_pi, NULL, __pyx_mstate_global->__pyx_n_u_cython_examples, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[1])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 31, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_monte_carlo_pi, __pyx_t_2) < 0) __PYX_ERR(0, 43, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_monte_carlo_pi, __pyx_t_2) < 0) __PYX_ERR(0, 31, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "cython_examples.pyx":1
@@ -3371,14 +3316,10 @@ static const __Pyx_StringTabEntry __pyx_string_tab[] = {
   {__pyx_k_Strings_must_have_equal_length_f, sizeof(__pyx_k_Strings_must_have_equal_length_f), 0, 1, 0}, /* PyObject cname: __pyx_kp_u_Strings_must_have_equal_length_f */
   {__pyx_k_ValueError, sizeof(__pyx_k_ValueError), 0, 1, 1}, /* PyObject cname: __pyx_n_u_ValueError */
   {__pyx_k_a, sizeof(__pyx_k_a), 0, 1, 1}, /* PyObject cname: __pyx_n_u_a */
-  {__pyx_k_a_bytes, sizeof(__pyx_k_a_bytes), 0, 1, 1}, /* PyObject cname: __pyx_n_u_a_bytes */
-  {__pyx_k_a_ptr, sizeof(__pyx_k_a_ptr), 0, 1, 1}, /* PyObject cname: __pyx_n_u_a_ptr */
   {__pyx_k_acc, sizeof(__pyx_k_acc), 0, 1, 1}, /* PyObject cname: __pyx_n_u_acc */
   {__pyx_k_add_note, sizeof(__pyx_k_add_note), 0, 1, 0}, /* PyObject cname: __pyx_kp_u_add_note */
   {__pyx_k_asyncio_coroutines, sizeof(__pyx_k_asyncio_coroutines), 0, 1, 1}, /* PyObject cname: __pyx_n_u_asyncio_coroutines */
   {__pyx_k_b, sizeof(__pyx_k_b), 0, 1, 1}, /* PyObject cname: __pyx_n_u_b */
-  {__pyx_k_b_bytes, sizeof(__pyx_k_b_bytes), 0, 1, 1}, /* PyObject cname: __pyx_n_u_b_bytes */
-  {__pyx_k_b_ptr, sizeof(__pyx_k_b_ptr), 0, 1, 1}, /* PyObject cname: __pyx_n_u_b_ptr */
   {__pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 1, 1}, /* PyObject cname: __pyx_n_u_cline_in_traceback */
   {__pyx_k_count, sizeof(__pyx_k_count), 0, 1, 1}, /* PyObject cname: __pyx_n_u_count */
   {__pyx_k_cython_examples, sizeof(__pyx_k_cython_examples), 0, 1, 1}, /* PyObject cname: __pyx_n_u_cython_examples */
@@ -3409,8 +3350,8 @@ static int __Pyx_InitStrings(__Pyx_StringTabEntry const *t, PyObject **target, c
 
 static int __Pyx_InitCachedBuiltins(__pyx_mstatetype *__pyx_mstate) {
   CYTHON_UNUSED_VAR(__pyx_mstate);
-  __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_mstate->__pyx_n_u_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(0, 26, __pyx_L1_error)
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_mstate->__pyx_n_u_range); if (!__pyx_builtin_range) __PYX_ERR(0, 37, __pyx_L1_error)
+  __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_mstate->__pyx_n_u_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_mstate->__pyx_n_u_range); if (!__pyx_builtin_range) __PYX_ERR(0, 25, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -3441,10 +3382,10 @@ static int __Pyx_InitConstants(__pyx_mstatetype *__pyx_mstate) {
             unsigned int argcount : 2;
             unsigned int num_posonly_args : 1;
             unsigned int num_kwonly_args : 1;
-            unsigned int nlocals : 4;
+            unsigned int nlocals : 3;
             unsigned int flags : 10;
-            unsigned int first_line : 6;
-            unsigned int line_table_length : 12;
+            unsigned int first_line : 5;
+            unsigned int line_table_length : 11;
         } __Pyx_PyCode_New_function_description;
 /* NewCodeObj.proto */
 static PyObject* __Pyx_PyCode_New(
@@ -3461,12 +3402,12 @@ static int __Pyx_CreateCodeObjects(__pyx_mstatetype *__pyx_mstate) {
   PyObject* tuple_dedup_map = PyDict_New();
   if (unlikely(!tuple_dedup_map)) return -1;
   {
-    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 10, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 6, 118};
-    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_a, __pyx_mstate->__pyx_n_u_b, __pyx_mstate->__pyx_n_u_len_a, __pyx_mstate->__pyx_n_u_len_b, __pyx_mstate->__pyx_n_u_count, __pyx_mstate->__pyx_n_u_i, __pyx_mstate->__pyx_n_u_a_bytes, __pyx_mstate->__pyx_n_u_b_bytes, __pyx_mstate->__pyx_n_u_a_ptr, __pyx_mstate->__pyx_n_u_b_ptr};
-    __pyx_mstate_global->__pyx_codeobj_tab[0] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_cython_examples_pyx, __pyx_mstate->__pyx_n_u_hamming_dist, __pyx_k_S_S_vS_j_Q_q_q_U_1_5_CuAQ_Q_1, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[0])) goto bad;
+    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 6, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 6, 88};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_a, __pyx_mstate->__pyx_n_u_b, __pyx_mstate->__pyx_n_u_len_a, __pyx_mstate->__pyx_n_u_len_b, __pyx_mstate->__pyx_n_u_count, __pyx_mstate->__pyx_n_u_i};
+    __pyx_mstate_global->__pyx_codeobj_tab[0] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_cython_examples_pyx, __pyx_mstate->__pyx_n_u_hamming_dist, __pyx_k_S_S_vS_j_Q_U_1_1AS_1AQ_Q_1, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[0])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 5, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 43, 95};
+    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 5, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 31, 95};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_nsamples, __pyx_mstate->__pyx_n_u_acc, __pyx_mstate->__pyx_n_u_i, __pyx_mstate->__pyx_n_u_x, __pyx_mstate->__pyx_n_u_y};
     __pyx_mstate_global->__pyx_codeobj_tab[1] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_cython_examples_pyx, __pyx_mstate->__pyx_n_u_monte_carlo_pi, __pyx_k_1_U_1_HD_2XQ_HD_2XQ_Bb_Bb_2Q_1, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[1])) goto bad;
   }
@@ -4871,6 +4812,28 @@ static void __Pyx_Raise(PyObject *type, PyObject *value, PyObject *tb, PyObject 
 bad:
     Py_XDECREF(owned_instance);
     return;
+}
+
+/* GetItemIntUnicode */
+static CYTHON_INLINE Py_UCS4 __Pyx_GetItemInt_Unicode_Fast(PyObject* ustring, Py_ssize_t i,
+                                                           int wraparound, int boundscheck) {
+    Py_ssize_t length;
+    if (unlikely(__Pyx_PyUnicode_READY(ustring) < 0)) return (Py_UCS4)-1;
+    if (wraparound | boundscheck) {
+        length = __Pyx_PyUnicode_GET_LENGTH(ustring);
+        #if !CYTHON_ASSUME_SAFE_SIZE
+        if (unlikely(length < 0)) return (Py_UCS4)-1;
+        #endif
+        if (wraparound & unlikely(i < 0)) i += length;
+        if ((!boundscheck) || likely(__Pyx_is_valid_index(i, length))) {
+            return __Pyx_PyUnicode_READ_CHAR(ustring, i);
+        } else {
+            PyErr_SetString(PyExc_IndexError, "string index out of range");
+            return (Py_UCS4)-1;
+        }
+    } else {
+        return __Pyx_PyUnicode_READ_CHAR(ustring, i);
+    }
 }
 
 /* FixUpExtensionType */

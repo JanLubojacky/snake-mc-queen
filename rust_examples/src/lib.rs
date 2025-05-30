@@ -12,59 +12,36 @@ fn hamming_dist(a: &str, b: &str) -> PyResult<i32> {
         ));
     }
     
-    // Use bytes instead of chars for ASCII strings (much faster)
-    // Falls back to char iteration for Unicode
-    let distance = if a.is_ascii() && b.is_ascii() {
-        a.bytes()
-            .zip(b.bytes())
-            .fold(0, |acc, (byte_a, byte_b)| acc + (byte_a != byte_b) as i32)
-    } else {
-        a.chars()
-            .zip(b.chars())
-            .map(|(a, b)| (a != b) as i32)
-            .sum()
-    };
+    let distance = a.chars()
+        .zip(b.chars())
+        .fold(0, |acc, (char_a, char_b)| acc + (char_a != char_b) as i32);
     
     Ok(distance)
 }
 
-// #[pyfunction]
-// fn hamming_dist(a: &str, b: &str) -> PyResult<u32> {
-//     // Check if strings have equal byte length (faster than char count for equal-length check)
-//     if a.len() != b.len() {
-//         return Err(PyValueError::new_err(
-//             "Strings must have equal length for Hamming distance calculation",
-//         ));
-//     }
-//
-//     // Fast path for ASCII strings (most common case)
-//     if a.is_ascii() && b.is_ascii() {
-//         let distance = a.bytes()
-//             .zip(b.bytes())
-//             .fold(0u32, |acc, (byte_a, byte_b)| acc + (byte_a != byte_b) as u32);
-//         return Ok(distance);
-//     }
-//
-//     // Fallback for Unicode strings
-//     let distance = a.chars()
-//         .zip(b.chars())
-//         .fold(0u32, |acc, (char_a, char_b)| acc + (char_a != char_b) as u32);
-//
-//     Ok(distance)
-// }
-
-// #[pyfunction]  
-// fn hamming_dist(a: &str, b: &str) -> PyResult<u32> {
-//     if a.len() != b.len() {
-//         return Err(PyValueError::new_err("Strings must have equal length"));
-//     }
-//
-//     let mut distance = 0u32;
-//     for (byte_a, byte_b) in a.bytes().zip(b.bytes()) {
-//         distance += (byte_a != byte_b) as u32;
-//     }
-//     Ok(distance)
-// }
+// this is able to check if the strings are ascii and work only on bytes if it is
+#[pyfunction]
+fn hamming_dist_fast(a: &str, b: &str) -> PyResult<i32> {
+    if a.len() != b.len() {
+        return Err(PyValueError::new_err(
+            "Strings must have equal length for Hamming distance calculation",
+        ));
+    }
+    
+    let mut distance;
+    if a.is_ascii() && b.is_ascii() {
+        distance = 0;
+        for (byte_a, byte_b) in a.bytes().zip(b.bytes()) {
+            distance += (byte_a != byte_b) as i32;
+        }
+    } else {
+        distance = a.chars()
+            .zip(b.chars())
+            .fold(0, |acc, (char_a, char_b)| acc + (char_a != char_b) as i32);
+    }
+    
+    Ok(distance)
+}
 
 /// Estimates pi using Monte Carlo method.
 #[pyfunction]
@@ -87,6 +64,7 @@ fn monte_carlo_pi(nsamples: usize) -> f64 {
 #[pymodule]
 fn rust_examples(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(hamming_dist, m)?)?;
+    m.add_function(wrap_pyfunction!(hamming_dist_fast, m)?)?;
     m.add_function(wrap_pyfunction!(monte_carlo_pi, m)?)?;
     Ok(())
 }
