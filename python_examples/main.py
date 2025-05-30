@@ -25,6 +25,16 @@ def hamming_dist(a: str, b: str) -> int:
     return sum(char_a != char_b for char_a, char_b in zip(a, b))
 
 
+def monte_carlo_pi(nsamples: int) -> float:
+    acc = 0
+    for i in range(nsamples):
+        x = random.random()
+        y = random.random()
+        if (x**2 + y**2) < 1.0:
+            acc += 1
+    return 4.0 * acc / nsamples
+
+
 @njit
 def hamming_dist_numba(a: str, b: str) -> int:
     """
@@ -43,7 +53,7 @@ def hamming_dist_numba(a: str, b: str) -> int:
 
 
 @njit
-def monte_carlo_pi(nsamples: int) -> float:
+def monte_carlo_pi_numba(nsamples: int) -> float:
     acc = 0
     for i in range(nsamples):
         x = random.random()

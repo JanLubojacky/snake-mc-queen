@@ -4,9 +4,9 @@ import string
 import time
 from collections.abc import Callable
 
+from cython_examples.cython_examples import hamming_dist as hamming_dist_cython
 from python_examples.main import hamming_dist, hamming_dist_numba
 from rust_examples import hamming_dist as hamming_dist_rust
-from cython_examples.cython_examples import hamming_dist as hamming_dist_cython
 
 
 def random_string(length: int) -> str:
@@ -31,10 +31,22 @@ def benchmark_hamming_dist():
     random.seed(42)
     lengths = [100, 1000, 10000, 100000]
 
-    print(
-        "Length\tPython (ms)\t\tNumba (ms)\t\tCython (ms)\t\tRust (ms)\t\tSpeedup rust\t\tSpeedup numba\t\tSpeedup cython"
-    )
-    print("-" * 160)
+    headers = [
+        "Length",
+        "Python (ms)",
+        "Numba (ms)",
+        "Cython (ms)",
+        "Rust (ms)",
+        "Speedup rust",
+        "Speedup numba",
+        "Speedup cython",
+    ]
+    col_width = 20
+
+    # Print header row
+    header_row = "".join(h.ljust(col_width) for h in headers)
+    print(header_row)
+    print("-" * (col_width * len(headers)))
 
     for length in lengths:
         # Generate 10 random string pairs for this length
@@ -61,9 +73,19 @@ def benchmark_hamming_dist():
         speedup_numba = py_mean / numba_mean
         speedup_cython = py_mean / cython_mean
 
-        print(
-            f"{length}\t{py_mean:.3f} ± {py_std:.3f}\t\t{numba_mean:.3f} ± {numba_std:.3f}\t\t{cython_mean:.3f} ± {cython_std:.3f}\t\t{rust_mean:.3f} ± {rust_std:.3f}\t\t{speedup_rust:.2f}x\t\t{speedup_numba:.2f}x\t\t{speedup_cython:.2f}x"
-        )
+        # Format each column with consistent spacing
+        row = [
+            f"{length}".ljust(col_width),
+            f"{py_mean:.3f} ± {py_std:.3f}".ljust(col_width),
+            f"{numba_mean:.3f} ± {numba_std:.3f}".ljust(col_width),
+            f"{cython_mean:.3f} ± {cython_std:.3f}".ljust(col_width),
+            f"{rust_mean:.3f} ± {rust_std:.3f}".ljust(col_width),
+            f"{speedup_rust:.2f}x".ljust(col_width),
+            f"{speedup_numba:.2f}x".ljust(col_width),
+            f"{speedup_cython:.2f}x".ljust(col_width),
+        ]
+
+        print("".join(row))
 
 
 if __name__ == "__main__":

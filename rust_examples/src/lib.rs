@@ -1,6 +1,6 @@
 use pyo3::exceptions::PyValueError;
 use pyo3::prelude::*;
-use rand_xoshiro::rand_core::{SeedableRng, RngCore};
+use rand_xoshiro::rand_core::{RngCore, SeedableRng};
 use rand_xoshiro::Xoshiro256PlusPlus;
 
 #[pyfunction]
@@ -11,11 +11,12 @@ fn hamming_dist(a: &str, b: &str) -> PyResult<i32> {
             "Strings must have equal length for Hamming distance calculation",
         ));
     }
-    
-    let distance = a.chars()
+
+    let distance = a
+        .chars()
         .zip(b.chars())
         .fold(0, |acc, (char_a, char_b)| acc + (char_a != char_b) as i32);
-    
+
     Ok(distance)
 }
 
@@ -27,7 +28,7 @@ fn hamming_dist_fast(a: &str, b: &str) -> PyResult<i32> {
             "Strings must have equal length for Hamming distance calculation",
         ));
     }
-    
+
     let mut distance;
     if a.is_ascii() && b.is_ascii() {
         distance = 0;
@@ -35,23 +36,24 @@ fn hamming_dist_fast(a: &str, b: &str) -> PyResult<i32> {
             distance += (byte_a != byte_b) as i32;
         }
     } else {
-        distance = a.chars()
+        distance = a
+            .chars()
             .zip(b.chars())
             .fold(0, |acc, (char_a, char_b)| acc + (char_a != char_b) as i32);
     }
-    
+
     Ok(distance)
 }
 
 /// Estimates pi using Monte Carlo method.
 #[pyfunction]
 fn monte_carlo_pi(nsamples: usize) -> f64 {
-    let mut rng = Xoshiro256PlusPlus::seed_from_u64(0);
+    let mut rng = Xoshiro256PlusPlus::seed_from_u64(42);
     let mut acc = 0;
 
     for _ in 0..nsamples {
-        let x = (rng.next_u64() / u64::MAX) as f64;
-        let y = (rng.next_u64() / u64::MAX) as f64;
+        let x = rng.next_u64() as f64 / u64::MAX as f64;
+        let y = rng.next_u64() as f64 / u64::MAX as f64;
         if (x * x + y * y) < 1.0 {
             acc += 1;
         }
