@@ -38,19 +38,35 @@ static PyObject* hamming_dist(PyObject* self, PyObject* args) {
     return PyLong_FromLong(count);
 }
 
-static uint64_t rng_state = 1;
+// Xoshiro256++ implementation
+static inline uint64_t rotl(const uint64_t x, int k) {
+    return (x << k) | (x >> (64 - k));
+}
 
-static inline uint32_t xorshift32() {
-    rng_state ^= rng_state << 13;
-    rng_state ^= rng_state >> 17;
-    rng_state ^= rng_state >> 5;
-    return (uint32_t)rng_state;
+
+uint64_t xoshiro_next(uint64_t s[4]) {
+    const uint64_t result = rotl(s[0] + s[3], 23) + s[0];
+    const uint64_t t = s[1] << 17;
+
+    s[2] ^= s[0];
+    s[3] ^= s[1];
+    s[1] ^= s[2];
+    s[0] ^= s[3];
+
+    s[2] ^= t;
+    s[3] = rotl(s[3], 45);
+
+    return result;
 }
 
 // C implementation of monte_carlo_pi
 static PyObject* monte_carlo_pi(PyObject* self, PyObject* args) {
     int nsamples;
-    
+
+     uint64_t local_s[4] = {42, 42^0xAAAAAAAAAAAAAAAAULL, 
+                           42^0x5555555555555555ULL, 
+                           42^0xCCCCCCCCCCCCCCCCULL};   
+
     // Parse arguments - expect one integer
     if (!PyArg_ParseTuple(args, "i", &nsamples)) {
         return NULL;
@@ -64,11 +80,11 @@ static PyObject* monte_carlo_pi(PyObject* self, PyObject* args) {
     int acc = 0;
     
     for (int i = 0; i < nsamples; i++) {
-        uint32_t rand1 = xorshift32();
-        uint32_t rand2 = xorshift32();
-
-        double x = rand1 * (1.0 / 4294967296.0);  // 2^32
-        double y = rand2 * (1.0 / 4294967296.0);       
+        uint64_t rand1 = xoshiro_next(local_s);
+        uint64_t rand2 = xoshiro_next(local_s);
+          
+        double x = (double)rand1 / (double)UINT64_MAX;
+        double y = (double)rand2 / (double)UINT64_MAX;
 
         if ((x * x + y * y) < 1.0) {
             acc++;
