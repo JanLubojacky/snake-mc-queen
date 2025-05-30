@@ -7,6 +7,7 @@ from collections.abc import Callable
 from cython_examples.cython_examples import hamming_dist as hamming_dist_cython
 from python_examples.main import hamming_dist, hamming_dist_numba
 from rust_examples import hamming_dist as hamming_dist_rust
+from c_examples import hamming_dist as hamming_dist_c
 
 
 def random_string(length: int) -> str:
@@ -37,9 +38,11 @@ def benchmark_hamming_dist():
         "Numba (ms)",
         "Cython (ms)",
         "Rust (ms)",
+        "C (ms)",
         "Speedup rust",
         "Speedup numba",
         "Speedup cython",
+        "Speedup C"
     ]
     col_width = 20
 
@@ -69,9 +72,14 @@ def benchmark_hamming_dist():
         cython_mean = statistics.mean(cython_times)
         cython_std = statistics.stdev(cython_times)
 
+        c_times = benchmark(hamming_dist_c, pairs)
+        c_mean = statistics.mean(c_times)
+        c_std = statistics.stdev(c_times)
+
         speedup_rust = py_mean / rust_mean
         speedup_numba = py_mean / numba_mean
         speedup_cython = py_mean / cython_mean
+        speedup_c = py_mean / c_mean
 
         # Format each column with consistent spacing
         row = [
@@ -80,9 +88,11 @@ def benchmark_hamming_dist():
             f"{numba_mean:.3f} ± {numba_std:.3f}".ljust(col_width),
             f"{cython_mean:.3f} ± {cython_std:.3f}".ljust(col_width),
             f"{rust_mean:.3f} ± {rust_std:.3f}".ljust(col_width),
-            f"{speedup_rust:.2f}x".ljust(col_width),
+            f"{c_mean:.3f} ± {c_std:.3f}".ljust(col_width),
             f"{speedup_numba:.2f}x".ljust(col_width),
             f"{speedup_cython:.2f}x".ljust(col_width),
+            f"{speedup_rust:.2f}x".ljust(col_width),
+            f"{speedup_c:.2f}x".ljust(col_width),
         ]
 
         print("".join(row))

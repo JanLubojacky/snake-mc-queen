@@ -5,6 +5,7 @@ import time
 from cython_examples.cython_examples import monte_carlo_pi as monte_carlo_pi_cython
 from python_examples.main import monte_carlo_pi, monte_carlo_pi_numba
 from rust_examples import monte_carlo_pi as monte_carlo_pi_rs
+from c_examples import monte_carlo_pi as monte_carlo_pi_c
 
 
 def benchmark_monte():
@@ -18,9 +19,11 @@ def benchmark_monte():
         "Numba (ms)",
         "Cython (ms)",
         "Rust (ms)",
-        "Speedup rust",
+        "C (ms)",
         "Speedup numba",
         "Speedup cython",
+        "Speedup rust",
+        "Speedup C"
     ]
     col_width = 20
 
@@ -71,12 +74,22 @@ def benchmark_monte():
             pi = monte_carlo_pi_cython(nsamples)
             cython_times.append((time.perf_counter() - start) * 1000)
 
+        c_times: list[float] = []
+        for _ in range(iterations):
+            start = time.perf_counter()
+            pi = monte_carlo_pi_c(nsamples)
+            c_times.append((time.perf_counter() - start) * 1000)
+
+        c_mean = statistics.mean(c_times)
+        c_std = statistics.stdev(c_times)
+
         cython_mean = statistics.mean(cython_times)
         cython_std = statistics.stdev(cython_times)
 
         speedup_rust = py_mean / rust_mean
         speedup_numba = py_mean / numba_mean
         speedup_cython = py_mean / cython_mean
+        speedup_c = py_mean / c_mean
 
         # Format each column with consistent spacing
         row = [
@@ -85,9 +98,11 @@ def benchmark_monte():
             f"{numba_mean:.3f} ± {numba_std:.3f}".ljust(col_width),
             f"{cython_mean:.3f} ± {cython_std:.3f}".ljust(col_width),
             f"{rust_mean:.3f} ± {rust_std:.3f}".ljust(col_width),
-            f"{speedup_rust:.2f}x".ljust(col_width),
+            f"{c_mean:.3f} ± {c_std:.3f}".ljust(col_width),
             f"{speedup_numba:.2f}x".ljust(col_width),
             f"{speedup_cython:.2f}x".ljust(col_width),
+            f"{speedup_rust:.2f}x".ljust(col_width),
+            f"{speedup_c:.2f}x".ljust(col_width),
         ]
 
         print("".join(row))

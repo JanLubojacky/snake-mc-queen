@@ -41,6 +41,12 @@ wheels = [
 name = "cython-examples"
 version = "0.1.0"
 source = { virtual = "cython_examples" }
+dependencies = [
+    { name = "cython" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "cython", specifier = ">=3.1.1" }]
 
 [[package]]
 name = "llvmlite"
