@@ -35,7 +35,7 @@ def monte_carlo_pi(nsamples: int) -> float:
     return 4.0 * acc / nsamples
 
 
-@njit
+@njit(cache=True)
 def hamming_dist_numba(a: str, b: str) -> int:
     """
     Alternative numba implementation using explicit indexing.
@@ -52,7 +52,7 @@ def hamming_dist_numba(a: str, b: str) -> int:
     return count
 
 
-@njit
+@njit(cache=True)
 def monte_carlo_pi_numba(nsamples: int) -> float:
     acc = 0
     for i in range(nsamples):

@@ -6,7 +6,8 @@ from collections.abc import Callable
 
 from cython_examples.cython_examples import hamming_dist as hamming_dist_cython
 from python_examples.main import hamming_dist, hamming_dist_numba
-from rust_examples import hamming_dist as hamming_dist_rust
+from rust_examples import hamming_dist_fast as hamming_dist_rust
+# from rust_examples import hamming_dist as hamming_dist_rust
 from c_examples import hamming_dist as hamming_dist_c
 
 
@@ -17,7 +18,7 @@ def random_string(length: int) -> str:
 def benchmark(
     func: Callable[[str, str], int],
     pairs: list[tuple[str, str]],
-    iterations: int = 100,
+    iterations: int = 50,
 ) -> list[float]:
     times: list[float] = []
     for _ in range(iterations):
@@ -39,12 +40,12 @@ def benchmark_hamming_dist():
         "Cython (ms)",
         "Rust (ms)",
         "C (ms)",
-        "Speedup rust",
         "Speedup numba",
         "Speedup cython",
+        "Speedup rust",
         "Speedup C"
     ]
-    col_width = 20
+    col_width = 15
 
     # Print header row
     header_row = "".join(h.ljust(col_width) for h in headers)

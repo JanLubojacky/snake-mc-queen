@@ -25,7 +25,7 @@ def benchmark_monte():
         "Speedup rust",
         "Speedup C"
     ]
-    col_width = 20
+    col_width = 15
 
     # Print header row
     header_row = "".join(h.ljust(col_width) for h in headers)
